@@ -1,7 +1,7 @@
 export function getStudents(db) {
   return new Promise((resolve, reject) => {
     db.query('select student.id, student.firstName, student.lastName, staff.firstName as teacherFirstName, staff.lastName as teacherLastName, staff.emailID as teacherEmailID, ' +
-      'takes.sectionID, grade from (student natural join takes) left join (section natural join teaches natural join staff) on takes.sectionID = teaches.sectionID where takes.year = (select year from time);',
+      'takes.sectionID, grade from (student natural join takes) left join (section natural join teaches natural join staff) on takes.sectionID = teaches.sectionID where takes.year = (select year from time) and teaches.year = (select year from time);',
       function (err, students) {
         if (err) {
           reject(err)
